@@ -1,101 +1,10 @@
-// import React, { useState } from 'react';
-
-// const PersonalInfoPage = ({ onNext }) => {
-//   const [formData, setFormData] = useState({
-//     firstName: '',
-//     lastName: '',
-//     phoneNumber: '',
-//     email: '',
-//     linkedinProfile: '',
-//     githubProfile: ''
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({
-//       ...formData,
-//       [name]: value
-//     });
-//   };
-
-//   const handleNext = (e) => {
-//     e.preventDefault();
-//     onNext(formData);
-//   };
-
-//   return (
-//     <form onSubmit={handleNext} className="form">
-//       <label htmlFor="firstName">First Name:</label>
-//       <input
-//         type="text"
-//         id="firstName"
-//         name="firstName"
-//         value={formData.firstName}
-//         onChange={handleChange}
-//         // required
-//       />
-      
-//       <label htmlFor="lastName">Last Name:</label>
-//       <input
-//         type="text"
-//         id="lastName"
-//         name="lastName"
-//         value={formData.lastName}
-//         onChange={handleChange}
-//         // required
-//       />
-      
-//       <label htmlFor="phoneNumber">Phone Number:</label>
-//       <input
-//         type="tel"
-//         id="phoneNumber"
-//         name="phoneNumber"
-//         value={formData.phoneNumber}
-//         onChange={handleChange}
-//         pattern="^\d{10}$" // Ensure exactly 10 digits
-//         // required
-//       />
-      
-//       <label htmlFor="email">Email:</label>
-//       <input
-//         type="email"
-//         id="email"
-//         name="email"
-//         value={formData.email}
-//         onChange={handleChange}
-//         // required
-//       />
-      
-//       <label htmlFor="linkedinProfile">LinkedIn Profile:</label>
-//       <input
-//         type="text"
-//         id="linkedinProfile"
-//         name="linkedinProfile"
-//         value={formData.linkedinProfile}
-//         onChange={handleChange}
-//       />
-      
-//       <label htmlFor="githubProfile">GitHub Profile:</label>
-//       <input
-//         type="text"
-//         id="githubProfile"
-//         name="githubProfile"
-//         value={formData.githubProfile}
-//         onChange={handleChange}
-//       />
-      
-//       <button type="submit">Next</button>
-//     </form>
-//   );
-// };
-
-// export default PersonalInfoPage;
+// PersonalInfoPage.js
 
 import React, { useState } from 'react';
 import './PersonalInfoPage.css'; // Import CSS file for styling
 
 const PersonalInfoPage = ({ onNext }) => {
-  const [formData, setFormData] = useState({
+  const [personalInfo, setPersonalInfo] = useState({
     firstName: '',
     lastName: '',
     phoneNumber: '',
@@ -107,23 +16,23 @@ const PersonalInfoPage = ({ onNext }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setPersonalInfo({
+      ...personalInfo,
       [name]: value
     });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({
-      ...formData,
+    setPersonalInfo({
+      ...personalInfo,
       profileImage: file
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext(formData);
+    onNext(personalInfo); // Call the function passed from props
   };
 
   return (
@@ -136,9 +45,9 @@ const PersonalInfoPage = ({ onNext }) => {
             type="text"
             id="firstName"
             name="firstName"
-            value={formData.firstName}
+            value={personalInfo.firstName}
             onChange={handleChange}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -147,9 +56,9 @@ const PersonalInfoPage = ({ onNext }) => {
             type="text"
             id="lastName"
             name="lastName"
-            value={formData.lastName}
+            value={personalInfo.lastName}
             onChange={handleChange}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -158,10 +67,10 @@ const PersonalInfoPage = ({ onNext }) => {
             type="tel"
             id="phoneNumber"
             name="phoneNumber"
-            pattern="[0-9]{10}" // Ensure only 10 digits
-            value={formData.phoneNumber}
+            pattern="[0-9]{10}"
+            value={personalInfo.phoneNumber}
             onChange={handleChange}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -170,9 +79,9 @@ const PersonalInfoPage = ({ onNext }) => {
             type="email"
             id="email"
             name="email"
-            value={formData.email}
+            value={personalInfo.email}
             onChange={handleChange}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -181,7 +90,7 @@ const PersonalInfoPage = ({ onNext }) => {
             type="text"
             id="linkedIn"
             name="linkedIn"
-            value={formData.linkedIn}
+            value={personalInfo.linkedIn}
             onChange={handleChange}
           />
         </div>
@@ -191,7 +100,7 @@ const PersonalInfoPage = ({ onNext }) => {
             type="text"
             id="github"
             name="github"
-            value={formData.github}
+            value={personalInfo.github}
             onChange={handleChange}
           />
         </div>

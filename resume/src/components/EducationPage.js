@@ -93,9 +93,7 @@ const EducationPage = ({ onBack,onNext }) => {
         onChange={handleChange}
         // required
       />
-
-      <div className="button-group">
-        <button type="button" onClick={onBack}>Back</button>
+        <div className="button-group">
         <button type="next">Next</button>
       </div>
     </form>
