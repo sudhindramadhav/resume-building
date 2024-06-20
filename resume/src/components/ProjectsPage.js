@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProjectsPage.css'; // Import CSS file for styling
 
-const ProjectsPage = ({ onNext }) => {
+const ProjectsPage = ({ onNext, educationData }) => {
+  // Initialize with one empty project
   const [projectsData, setProjectsData] = useState([{ title: '', description: '', githubLink: '' }]);
+
+  useEffect(() => {
+    // If educationData changes, reset projectsData to one empty project
+    setProjectsData([{ title: '', description: '', githubLink: '' }]);
+  }, [educationData]);
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;

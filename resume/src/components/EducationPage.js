@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-const EducationPage = ({ onBack,onNext }) => {
+const EducationPage = ({ onBack, onNext }) => {
   const [educationData, setEducationData] = useState({
-    tenth: { schoolName: '', yearOfPassing: '' },
-    twelfth: { schoolName: '', yearOfPassing: '' },
-    college: { collegeName: '', yearOfPassing: '', stream: '' }
+    tenth: { schoolName: '', yearOfPassing: '',percentage:'' },
+    twelfth: { schoolName: '', yearOfPassing: '',percentage:'' },
+    college: { collegeName: '', yearOfPassing: '', stream: '',percentage:'' }
   });
 
   const handleChange = (e) => {
@@ -22,12 +22,18 @@ const EducationPage = ({ onBack,onNext }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext(educationData);
+
+    // Convert educationData object into an array of objects
+    const formattedEducationData = Object.keys(educationData).map((level) => ({
+      level,
+      ...educationData[level]
+    }));
+
+    onNext(formattedEducationData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="form">
-
       <label htmlFor="tenth.schoolName">10th Grade School Name:</label>
       <input
         type="text"
@@ -35,7 +41,7 @@ const EducationPage = ({ onBack,onNext }) => {
         name="tenth.schoolName"
         value={educationData.tenth.schoolName}
         onChange={handleChange}
-        // required
+        required
       />
       <label htmlFor="tenth.yearOfPassing">Year of Passing:</label>
       <input
@@ -44,7 +50,16 @@ const EducationPage = ({ onBack,onNext }) => {
         name="tenth.yearOfPassing"
         value={educationData.tenth.yearOfPassing}
         onChange={handleChange}
-        // required
+        required
+      />
+      <label htmlFor="tenth.percentage">Percentage:</label>
+      <input
+        type="text"
+        id="tenth.percentage"
+        name="tenth.percentage"
+        value={educationData.tenth.percentage}
+        onChange={handleChange}
+        required
       />
 
       <label htmlFor="twelfth.schoolName">12th Grade School Name:</label>
@@ -54,7 +69,7 @@ const EducationPage = ({ onBack,onNext }) => {
         name="twelfth.schoolName"
         value={educationData.twelfth.schoolName}
         onChange={handleChange}
-        // required
+        required
       />
       <label htmlFor="twelfth.yearOfPassing">Year of Passing:</label>
       <input
@@ -63,7 +78,17 @@ const EducationPage = ({ onBack,onNext }) => {
         name="twelfth.yearOfPassing"
         value={educationData.twelfth.yearOfPassing}
         onChange={handleChange}
-        // required
+        required
+      />
+
+<label htmlFor="twelfth.percentage">Percentage:</label>
+      <input
+        type="text"
+        id="twelfth.percentage"
+        name="twelfth.percentage"
+        value={educationData.twelfth.percentage}
+        onChange={handleChange}
+        required
       />
 
       <label htmlFor="college.collegeName">College Name:</label>
@@ -73,7 +98,7 @@ const EducationPage = ({ onBack,onNext }) => {
         name="college.collegeName"
         value={educationData.college.collegeName}
         onChange={handleChange}
-        // required
+        required
       />
       <label htmlFor="college.yearOfPassing">Year of Passing:</label>
       <input
@@ -82,7 +107,7 @@ const EducationPage = ({ onBack,onNext }) => {
         name="college.yearOfPassing"
         value={educationData.college.yearOfPassing}
         onChange={handleChange}
-        // required
+        required
       />
       <label htmlFor="college.stream">Stream:</label>
       <input
@@ -91,10 +116,22 @@ const EducationPage = ({ onBack,onNext }) => {
         name="college.stream"
         value={educationData.college.stream}
         onChange={handleChange}
-        // required
+        required
       />
-        <div className="button-group">
-        <button type="next">Next</button>
+
+<label htmlFor="college.percentage">Percentage:</label>
+      <input
+        type="text"
+        id="college.percentage"
+        name="college.percentage"
+        value={educationData.college.percentage}
+        onChange={handleChange}
+        required
+      />
+      
+      <div className="button-group">
+        <button type="button" onClick={() => onBack('description')}>Back</button>
+        <button type="submit">Next</button>
       </div>
     </form>
   );

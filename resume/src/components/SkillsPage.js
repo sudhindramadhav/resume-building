@@ -162,3 +162,4 @@ const SkillsPage = ({ onNext }) => {
 };
 
 export default SkillsPage;
+

@@ -1,5 +1,3 @@
-// PersonalInfoPage.js
-
 import React, { useState } from 'react';
 import './PersonalInfoPage.css'; // Import CSS file for styling
 
@@ -32,7 +30,7 @@ const PersonalInfoPage = ({ onNext }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext(personalInfo); // Call the function passed from props
+    onNext(personalInfo, 'description'); // Pass personal info data to onNext and navigate to description page
   };
 
   return (
@@ -47,7 +45,7 @@ const PersonalInfoPage = ({ onNext }) => {
             name="firstName"
             value={personalInfo.firstName}
             onChange={handleChange}
-            // required
+            required
           />
         </div>
         <div className="form-group">
@@ -58,7 +56,7 @@ const PersonalInfoPage = ({ onNext }) => {
             name="lastName"
             value={personalInfo.lastName}
             onChange={handleChange}
-            // required
+            required
           />
         </div>
         <div className="form-group">
@@ -70,7 +68,7 @@ const PersonalInfoPage = ({ onNext }) => {
             pattern="[0-9]{10}"
             value={personalInfo.phoneNumber}
             onChange={handleChange}
-            // required
+            required
           />
         </div>
         <div className="form-group">
@@ -81,7 +79,7 @@ const PersonalInfoPage = ({ onNext }) => {
             name="email"
             value={personalInfo.email}
             onChange={handleChange}
-            // required
+            required
           />
         </div>
         <div className="form-group">
