@@ -1,14 +1,14 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import './App.css';
 import PersonalInfoPage from './components/PersonalInfoPage';
-import Description from './components/DescriptionPage';
+import DescriptionPage from './components/DescriptionPage';
 import EducationPage from './components/EducationPage';
 import WorkExperiencePage from './components/WorkExperiencePage';
 import SkillsPage from './components/SkillsPage';
 import ProjectsPage from './components/ProjectsPage';
 import ResumePage from './components/ResumePage';
-import './App.css'; // Import CSS file for styling
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('personalInfo');
@@ -19,8 +19,47 @@ const App = () => {
   const [skillsData, setSkillsData] = useState({});
   const [projectsData, setProjectsData] = useState([]);
 
-  const resumeRef = useRef();
+  // Ref for the resume page container
+  const resumeRef = useRef(null);
 
+  // Function to calculate number of pages in resume
+  const handleDownload = async () => {
+    if (!resumeRef.current) return;
+  
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageHeight = pdf.internal.pageSize.height;
+    const resumeHeight = resumeRef.current.offsetHeight;
+    const numberOfPages = Math.ceil(resumeHeight / pageHeight);
+  
+    for (let i = 0; i < numberOfPages; i++) {
+      const yOffset = -(i * pageHeight * 4); // Scale factor
+  
+      await html2canvas(resumeRef.current, {
+        scrollY: yOffset,
+        width: resumeRef.current.offsetWidth,
+        height: pageHeight,
+        windowWidth: document.documentElement.offsetWidth,
+        windowHeight: resumeHeight,
+        useCORS: true,
+        scale: 2,
+        backgroundColor: '#ffffff',
+      }).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  
+        if (i < numberOfPages - 1) {
+          pdf.addPage();
+        }
+      });
+    }
+  
+    pdf.save('resume.pdf');
+  };
+  // Function to handle navigation between pages
   const handleNext = (data, nextPage) => {
     switch (currentPage) {
       case 'personalInfo':
@@ -52,37 +91,15 @@ const App = () => {
     }
   };
 
+  // Function to handle going back to previous page
   const handleBack = (prevPage) => {
     setCurrentPage(prevPage);
-  };
-
-  const handleDownload = () => {
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const contentHeight = resumeRef.current.offsetHeight;
-    const contentWidth = resumeRef.current.offsetWidth;
-    html2canvas(resumeRef.current, {
-      scale: 1,
-      scrollX: 0,
-      scrollY: 0,
-      width: contentWidth,
-      height: contentHeight,
-      windowWidth: document.documentElement.offsetWidth,
-      windowHeight: document.documentElement.offsetHeight,
-      useCORS: true, // This is important to capture images from different origins
-    }).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-
-      // Add image Data to PDF
-      pdf.addImage(imgData, 'PNG', 0, 0, contentWidth, contentHeight);
-
-      pdf.save('resume.pdf');
-    });
   };
 
   return (
     <div className="app-container">
       {currentPage === 'personalInfo' && <PersonalInfoPage onNext={(data) => handleNext(data, 'description')} />}
-      {currentPage === 'description' && <Description onNext={(data) => handleNext(data, 'education')} />}
+      {currentPage === 'description' && <DescriptionPage onNext={(data) => handleNext(data, 'education')} />}
       {currentPage === 'education' && (
         <EducationPage onBack={() => handleBack('description')} onNext={(data) => handleNext(data, 'workExperience')} />
       )}
@@ -90,10 +107,12 @@ const App = () => {
         <WorkExperiencePage onBack={() => handleBack('education')} onNext={(data) => handleNext(data, 'skills')} />
       )}
       {currentPage === 'skills' && <SkillsPage onBack={() => handleBack('workExperience')} onNext={(data) => handleNext(data, 'projects')} />}
-      {currentPage === 'projects' && <ProjectsPage onBack={() => handleBack('skills')} onNext={(data) => handleNext(data, 'resume')} />}
+      {currentPage === 'projects' && (
+        <ProjectsPage onBack={() => handleBack('skills')} onNext={(data) => handleNext(data, 'resume')} />
+      )}
       {currentPage === 'resume' && (
         <ResumePage
-        ref = {resumeRef}
+          ref={resumeRef}
           personalInfo={personalInfo}
           description={description}
           educationData={educationData}

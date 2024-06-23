@@ -1,18 +1,20 @@
 /* DescriptionPage.css */
 
-.description-page-container {
+.description-container {
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.description-page-container h2 {
+.description-container h2 {
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 26px;
   color: #333333;
+  text-align: center;
+  font-weight: bold;
 }
 
 .description-form {
@@ -23,7 +25,7 @@
 .description-form label {
   margin-bottom: 8px;
   font-weight: bold;
-  color: #333333;
+  color: #555555;
 }
 
 .description-form textarea {
@@ -34,12 +36,13 @@
   font-size: 16px;
   resize: vertical;
   color: #333333;
+  min-height: 150px;
+  transition: border-color 0.3s ease;
 }
 
-.button-group {
-  display: flex;
-  justify-content: space-between; 
-  margin-top: 16px; /* Adds space between buttons */
+.description-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 .description-form button {
@@ -50,9 +53,41 @@
   color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .description-form button:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.description-form button:active {
+  transform: scale(1);
+}
+
+.description-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .description-container {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .description-container h2 {
+    font-size: 22px;
+  }
+
+  .description-form textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .description-form button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
 }

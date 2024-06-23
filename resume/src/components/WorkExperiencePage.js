@@ -49,14 +49,15 @@ const WorkExperiencePage = ({ onNext }) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor={`duration-${index}`}>Duration:</label>
+            <label htmlFor={`duration-${index}`}>Duration (in months):</label>
             <input
-              type="text"
+              type="number"
               id={`duration-${index}`}
               name="duration"
               value={experience.duration}
               onChange={(e) => handleChange(e, index)}
               placeholder="Duration"
+              min="1"
               required
             />
           </div>

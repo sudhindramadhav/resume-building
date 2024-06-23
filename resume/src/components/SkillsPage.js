@@ -87,6 +87,9 @@ const SkillsPage = ({ onNext }) => {
     }
   };
 
+  const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  const proficiencyLevels = ['Basic', 'Conversational', 'Fluent', 'Native'];
+
   return (
     <div className="skills-container">
       <h2>Skills, Languages, Hobbies</h2>
@@ -94,7 +97,7 @@ const SkillsPage = ({ onNext }) => {
         <div className="form-group">
           <h3>Skills</h3>
           {skillsData.map((skill, index) => (
-            <div key={index}>
+            <div key={index} className="form-row">
               <input
                 type="text"
                 name="skill"
@@ -103,14 +106,17 @@ const SkillsPage = ({ onNext }) => {
                 placeholder={`Skill ${index + 1}`}
                 required
               />
-              <input
-                type="text"
+              <select
                 name="level"
                 value={skill.level}
                 onChange={(e) => handleChange(e, index, 'skills')}
-                placeholder="Level"
                 required
-              />
+              >
+                <option value="" disabled>Level</option>
+                {skillLevels.map((level) => (
+                  <option key={level} value={level}>{level}</option>
+                ))}
+              </select>
             </div>
           ))}
           <button type="button" onClick={() => handleAddMore('skills')}>Add More Skills</button>
@@ -118,7 +124,7 @@ const SkillsPage = ({ onNext }) => {
         <div className="form-group">
           <h3>Languages Known</h3>
           {languagesData.map((language, index) => (
-            <div key={index}>
+            <div key={index} className="form-row">
               <input
                 type="text"
                 name="language"
@@ -127,14 +133,17 @@ const SkillsPage = ({ onNext }) => {
                 placeholder={`Language ${index + 1}`}
                 required
               />
-              <input
-                type="text"
+              <select
                 name="proficiency"
                 value={language.proficiency}
                 onChange={(e) => handleChange(e, index, 'languages')}
-                placeholder="Proficiency"
                 required
-              />
+              >
+                <option value="" disabled>Proficiency</option>
+                {proficiencyLevels.map((proficiency) => (
+                  <option key={proficiency} value={proficiency}>{proficiency}</option>
+                ))}
+              </select>
             </div>
           ))}
           <button type="button" onClick={() => handleAddMore('languages')}>Add More Languages</button>
@@ -142,7 +151,7 @@ const SkillsPage = ({ onNext }) => {
         <div className="form-group">
           <h3>Hobbies and Interests</h3>
           {hobbiesData.map((hobby, index) => (
-            <div key={index}>
+            <div key={index} className="form-row">
               <input
                 type="text"
                 name="hobby"
@@ -162,4 +171,3 @@ const SkillsPage = ({ onNext }) => {
 };
 
 export default SkillsPage;
-

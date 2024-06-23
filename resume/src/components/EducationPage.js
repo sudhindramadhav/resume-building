@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import './EducationPage.css'; // Import CSS file for styling
 
 const EducationPage = ({ onBack, onNext }) => {
   const [educationData, setEducationData] = useState({
-    tenth: { schoolName: '', yearOfPassing: '',percentage:'' },
-    twelfth: { schoolName: '', yearOfPassing: '',percentage:'' },
-    college: { collegeName: '', yearOfPassing: '', stream: '',percentage:'' }
+    tenth: { schoolName: '', yearOfPassing: '', percentage: '' },
+    twelfth: { schoolName: '', yearOfPassing: '', percentage: '' },
+    college: { collegeName: '', yearOfPassing: '', stream: '', percentage: '' }
   });
 
   const handleChange = (e) => {
@@ -32,8 +33,19 @@ const EducationPage = ({ onBack, onNext }) => {
     onNext(formattedEducationData);
   };
 
+  const generateYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let i = currentYear+3; i >= 1970; i--) {
+      years.push(<option key={i} value={i}>{i}</option>);
+    }
+    return years;
+  };
+
   return (
     <form onSubmit={handleSubmit} className="form">
+      <h2>Education Details</h2>
+      
       <label htmlFor="tenth.schoolName">10th Grade School Name:</label>
       <input
         type="text"
@@ -44,21 +56,25 @@ const EducationPage = ({ onBack, onNext }) => {
         required
       />
       <label htmlFor="tenth.yearOfPassing">Year of Passing:</label>
-      <input
-        type="text"
+      <select
         id="tenth.yearOfPassing"
         name="tenth.yearOfPassing"
         value={educationData.tenth.yearOfPassing}
         onChange={handleChange}
         required
-      />
+      >
+        <option value="">Select Year</option>
+        {generateYearOptions()}
+      </select>
       <label htmlFor="tenth.percentage">Percentage:</label>
       <input
-        type="text"
+        type="number"
         id="tenth.percentage"
         name="tenth.percentage"
         value={educationData.tenth.percentage}
         onChange={handleChange}
+        min="0"
+        max="100"
         required
       />
 
@@ -72,22 +88,25 @@ const EducationPage = ({ onBack, onNext }) => {
         required
       />
       <label htmlFor="twelfth.yearOfPassing">Year of Passing:</label>
-      <input
-        type="text"
+      <select
         id="twelfth.yearOfPassing"
         name="twelfth.yearOfPassing"
         value={educationData.twelfth.yearOfPassing}
         onChange={handleChange}
         required
-      />
-
-<label htmlFor="twelfth.percentage">Percentage:</label>
+      >
+        <option value="">Select Year</option>
+        {generateYearOptions()}
+      </select>
+      <label htmlFor="twelfth.percentage">Percentage:</label>
       <input
-        type="text"
+        type="number"
         id="twelfth.percentage"
         name="twelfth.percentage"
         value={educationData.twelfth.percentage}
         onChange={handleChange}
+        min="0"
+        max="100"
         required
       />
 
@@ -101,14 +120,16 @@ const EducationPage = ({ onBack, onNext }) => {
         required
       />
       <label htmlFor="college.yearOfPassing">Year of Passing:</label>
-      <input
-        type="text"
+      <select
         id="college.yearOfPassing"
         name="college.yearOfPassing"
         value={educationData.college.yearOfPassing}
         onChange={handleChange}
         required
-      />
+      >
+        <option value="">Select Year</option>
+        {generateYearOptions()}
+      </select>
       <label htmlFor="college.stream">Stream:</label>
       <input
         type="text"
@@ -118,17 +139,18 @@ const EducationPage = ({ onBack, onNext }) => {
         onChange={handleChange}
         required
       />
-
-<label htmlFor="college.percentage">Percentage:</label>
+      <label htmlFor="college.percentage">Percentage:</label>
       <input
-        type="text"
+        type="number"
         id="college.percentage"
         name="college.percentage"
         value={educationData.college.percentage}
         onChange={handleChange}
+        min="0"
+        max="100"
         required
       />
-      
+
       <div className="button-group">
         <button type="button" onClick={() => onBack('description')}>Back</button>
         <button type="submit">Next</button>

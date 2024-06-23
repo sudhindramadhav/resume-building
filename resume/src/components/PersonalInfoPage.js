@@ -28,6 +28,11 @@ const PersonalInfoPage = ({ onNext }) => {
     });
   };
 
+  const handlePhoneNumberInput = (e) => {
+    e.target.value = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+    handleChange(e);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onNext(personalInfo, 'description'); // Pass personal info data to onNext and navigate to description page
@@ -67,6 +72,7 @@ const PersonalInfoPage = ({ onNext }) => {
             name="phoneNumber"
             pattern="[0-9]{10}"
             value={personalInfo.phoneNumber}
+            onInput={handlePhoneNumberInput}
             onChange={handleChange}
             required
           />

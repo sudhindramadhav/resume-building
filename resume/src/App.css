@@ -39,11 +39,27 @@
   }
 }
 
+
+body {
+  font-family: 'Arial', sans-serif; /* Example: Use Arial or other web-safe fonts */
+  font-size: 12px; /* Adjust font size as needed */
+}
+
 .App-header {
   background-color: #282c34;
   padding: 20px;
   text-align: center; /* Center-align text within the header */
 }
+.resume-container {
+  text-align: left;
+}
+.resume-container h2,
+.resume-container p,
+.resume-container ul,
+.resume-container li {
+  text-align: left;
+}
+
 
 .App-header h1 {
   color: white;
